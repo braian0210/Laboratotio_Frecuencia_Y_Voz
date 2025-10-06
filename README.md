@@ -1,5 +1,7 @@
 # Laboratotio_Frecuencia_Y_Voz
+
 Objetivos
+
 Capturar y procesar señales de voz masculinas y femeninas.
 
  Aplicar la Transformada de Fourier como herramienta de análisis espectral de la
