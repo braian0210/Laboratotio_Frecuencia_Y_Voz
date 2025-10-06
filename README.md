@@ -256,10 +256,8 @@ print(f"Audio masculino - Original: {len(audio_masc)} muestras, Filtrado: {len(a
 ```
 Obteniéndose 
 
-```
-<img width="1389" height="790" alt="image" src="https://github.com/user-attachments/assets/638fdd5a-5913-4899-b4f1-e26e5c491c00" />
 
-```
+<img width="1389" height="790" alt="image" src="https://github.com/user-attachments/assets/638fdd5a-5913-4899-b4f1-e26e5c491c00" />
 
 
  Medición del Jitter (variación en la frecuencia fundamental):
