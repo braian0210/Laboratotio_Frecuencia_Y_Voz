@@ -17,6 +17,7 @@ a partir de su análisis en frecuencia.
 en función del género. 
 
 PARTE A – Adquisición de las señales de voz
+
 ![Imagen de WhatsApp 2025-10-06 a las 21 13 03_a1233061](https://github.com/user-attachments/assets/d44bf95d-554c-4525-867c-40fa1f75aa03)
 
 
@@ -1466,8 +1467,12 @@ Hablando específicamente de nuestros resultados obtenidos tenemos concordancia 
 
 *** ¿Qué otras diferencias notan en términos de brillo, media o intensidad?***
 Respecto al brillo, media o intensidad se evidencio en los resultados que las voces de los sujetos femeninos tuvieron un shimmer relativo mayor que el de los hombres (femenino 27,45%, masculino 25%), lo que nos muestra una mayor inestabilidad de parte de los hombres en la frecuencia de sus ciclos glóticos, en cambio los sujetos femeninos mostraron una mayor variabilidad de sus amplitudes mostrando así una voz más brillante. En cuanto a la amplitud promedio se obtuvieron valores similares lo que muestra que no hubo gran variación de la intensidad de las voces entre géneros 
+
 *** Redactar conclusiones sobre el comportamiento de la voz en hombres y
 mujeres a partir de los análisis realizados.***
+
+En conclusión, los datos obtenidos concuerdan con los datos teóricos y fisiológicos esperados, donde no es difícil evidenciar las diferencias entre voces femeninas y masculinas desde que las voces femeninas cuentan con más brillo y una frecuencia mayor y su variabilidad, demostrando así que las muestras fueron tomadas de la mejor manera y su posterior análisis fue bueno. Estos resultados son los esperados gracias a las anteriores investigaciones y el conocimiento fisiológico adquirido atreves de la carrera e investigaciones. 
+
 
 *** Discuta la importancia clínica del jitter y shimmer en el análisis de la voz.***
 
