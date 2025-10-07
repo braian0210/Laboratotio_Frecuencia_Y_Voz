@@ -17,6 +17,8 @@ a partir de su análisis en frecuencia.
 en función del género. 
 
 PARTE A – Adquisición de las señales de voz
+![Imagen de WhatsApp 2025-10-06 a las 21 13 03_a1233061](https://github.com/user-attachments/assets/d44bf95d-554c-4525-867c-40fa1f75aa03)
+
 
 1. Grabar con un micrófono la misma frase corta (aprox. 5 segundos) en 6
 personas distintas: 3 hombres y 3 mujeres. Para esto pueden usar los
@@ -174,6 +176,9 @@ sujeto6
 
 
 PARTE B – Medición de Jitter y Shimmer 
+
+![Imagen de WhatsApp 2025-10-06 a las 21 35 15_35fc6513](https://github.com/user-attachments/assets/84f916cc-a7dc-470a-9066-d6965cc2d8a2)
+
 
 Seleccione una de las grabaciones realizadas en la Parte A por cada género
 (una voz de hombre y una de mujer).
@@ -1459,12 +1464,12 @@ Estas diferencias son debido a factores anatómicos especialmente del aparato fo
 Hablando específicamente de nuestros resultados obtenidos tenemos concordancia con lo antes mencionado, las voces femeninas obtuvieron una F0 promedio de 321,34 mientras que las masculinas mostraron un promedio de 227.95 Hz, confirmando así que las voces femeninas son más agudas y presentan mayor vibración que las masculinas.
 
 
- ¿Qué otras diferencias notan en términos de brillo, media o intensidad?
+*** ¿Qué otras diferencias notan en términos de brillo, media o intensidad?***
+Respecto al brillo, media o intensidad se evidencio en los resultados que las voces de los sujetos femeninos tuvieron un shimmer relativo mayor que el de los hombres (femenino 27,45%, masculino 25%), lo que nos muestra una mayor inestabilidad de parte de los hombres en la frecuencia de sus ciclos glóticos, en cambio los sujetos femeninos mostraron una mayor variabilidad de sus amplitudes mostrando así una voz más brillante. En cuanto a la amplitud promedio se obtuvieron valores similares lo que muestra que no hubo gran variación de la intensidad de las voces entre géneros 
+*** Redactar conclusiones sobre el comportamiento de la voz en hombres y
+mujeres a partir de los análisis realizados.***
 
- Redactar conclusiones sobre el comportamiento de la voz en hombres y
-mujeres a partir de los análisis realizados.
-
- Discuta la importancia clínica del jitter y shimmer en el análisis de la voz. 
+*** Discuta la importancia clínica del jitter y shimmer en el análisis de la voz.***
 
 
 
