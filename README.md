@@ -33,17 +33,90 @@ claro (ejemplo: mujer1.wav, hombre2.wav).
 
 
 3. Importar las señales de voz en Python y graficarlas en el dominio del tiempo.
+   
 
-   ```
-   
-   ```
-   
-   
-   
-6. Calcular la Transformada de Fourier de cada señal y graficar su espectro de
-magnitudes frecuenciales.
+```
+ import wave
+import numpy as np
+import matplotlib.pyplot as plt
+import librosa
+from librosa import effects
 
-7. Identificar y reportar las siguientes características de cada señal:
+# === Cargar archivo de audio ===
+audio = wave.open(r"/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 1 fem.wav", "rb")
+
+sample_frec = audio.getframerate()
+n_muestras = audio.getnframes()
+onda_señal = audio.readframes(-1)
+num_channels = audio.getnchannels()
+audio.close()
+
+duracionaudio = n_muestras / sample_frec
+signal_array = np.frombuffer(onda_señal, dtype=np.int16)
+signal_array = signal_array.reshape(-1, num_channels)
+times = np.linspace(0, duracionaudio, num=n_muestras, endpoint=False)
+
+# === Señal de voz cruda ===
+plt.figure(figsize=(15, 5))
+plt.plot(times, signal_array[:, 0])
+plt.title("Señal de voz - sujeto 1 fem (raw)")
+plt.xlabel("Tiempo [s]")
+plt.ylabel("Amplitud")
+plt.xlim(0, duracionaudio)
+plt.grid(True)
+plt.show()
+
+# === Cálculo RMS ===
+ruta = r"/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 1 fem.wav"
+y, sr = librosa.load(ruta, sr=None)
+
+frame_length = int(0.02 * sr)     # 20 ms
+hop_length = int(frame_length // 4)  # solapamiento 75%
+
+rms = librosa.feature.rms(y=y, frame_length=frame_length, hop_length=hop_length)[0]
+rms_db = librosa.amplitude_to_db(rms, ref=1.0, amin=1e-8, top_db=80.0)
+times_rms = librosa.frames_to_time(np.arange(len(rms_db)), sr=sr, hop_length=hop_length)
+
+# === Gráfica RMS ===
+plt.figure(figsize=(12,4))
+plt.plot(times_rms, rms_db)
+plt.title("Nivel RMS en dBFS (20 ms) - sujeto 1 fem")
+plt.xlabel("Tiempo [s]")
+plt.ylabel("Nivel [dBFS]")
+plt.ylim(-80, 0)
+plt.grid(True)
+plt.show()
+
+# === Datos generales ===
+print("Sujeto1 — Frecuencia de muestreo:", sample_frec, "Hz")
+print("Sujeto1 — Número de muestras:", n_muestras)
+print("Sujeto1 — Duración (s):", duracionaudio)
+
+```
+   realizando este procedimiento para las 6 señales, dando como resultado la  señal directamente graficada en funcion del tiempo y luego su version en dB usando RMS.
+
+<img width="1258" height="470" alt="image" src="https://github.com/user-attachments/assets/19cfda9b-3a64-4820-9cfb-3552c932d94b" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/de2e3c7d-4b21-4c8e-9aba-44d58dcd244f" />
+sujeto2
+<img width="1258" height="470" alt="image" src="https://github.com/user-attachments/assets/da749f93-5089-4c07-bbfe-000adb153807" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/3000ee7f-2349-47ff-aae2-da68eb0a009c" />
+sujeto3
+<img width="1267" height="470" alt="image" src="https://github.com/user-attachments/assets/ae303755-0525-40e9-b4b4-d0ab81ca8814" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/e98d1324-01a5-45d0-8fa4-7bc6d47fe88b" />
+sujeto4
+<img width="1258" height="470" alt="image" src="https://github.com/user-attachments/assets/9578b6db-0fb5-475e-8af4-a7fec3c71b32" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/43b511b7-2655-4602-b7b2-8811c1ad6458" />
+sujeto5
+<img width="1258" height="470" alt="image" src="https://github.com/user-attachments/assets/5edca332-d2a5-4c76-9f93-93e4d2ee9d76" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/e7a636b2-6c38-47c8-8a9c-1556c0b44f1e" />
+sujeto6
+<img width="1267" height="470" alt="image" src="https://github.com/user-attachments/assets/0ad061b8-1884-42c1-b1f1-fe8433bbd882" />
+<img width="1008" height="393" alt="image" src="https://github.com/user-attachments/assets/1d34e3a3-707c-4273-bbcb-5e3011e07697" />
+
+
+   
+6. Calcular la Transformada de Fourier de cada señal y graficar su espectro de magnitudes frecuenciales.
+7.  Identificar y reportar las siguientes características de cada señal:
     
 a. Frecuencia fundamental.
 
@@ -52,6 +125,53 @@ b. Frecuencia media.
 c. Brillo.
 
 d. Intensidad (energía).
+```
+eps = 1e-12  
+signal_array = np.frombuffer(onda_señal, dtype=np.int16).reshape(-1, num_channels)
+if num_channels > 1:
+    signal_array = signal_array[:, 0]
+
+# FFT (solo mitad positiva)
+fft_vals = np.fft.rfft(signal_array)
+fft_freq = np.fft.rfftfreq(len(signal_array), 1.0 / sample_frec)
+fft_data = np.abs(fft_vals)
+
+# Plot (semilog-x, magnitud lineal)
+plt.figure(figsize=(15,4))
+plt.semilogx(fft_freq, fft_data)
+plt.title("Espectro de frecuencia - sujeto 1 fem")
+plt.xlabel("Frecuencia [Hz]")
+plt.ylabel("Magnitud")
+plt.grid(True)
+plt.show()
+
+# Características
+idx_f0 = np.argmax(fft_data[1:]) + 1
+frecuencia_fundamental = fft_freq[idx_f0]
+frecuencia_media = np.sum(fft_freq * fft_data) / np.sum(fft_data)
+mask_brillo = fft_freq > 750
+brillo = np.sum(fft_freq[mask_brillo] * fft_data[mask_brillo]) / np.sum(fft_data[mask_brillo])
+energia = np.sum(signal_array.astype(float)**2)
+
+print("Sujeto1 - Frecuencia fundamental:", frecuencia_fundamental, "Hz")
+print("Sujeto1 - Frecuencia media:", frecuencia_media, "Hz")
+print("Sujeto1 - Brillo (>750 Hz):", brillo, "Hz")
+print("Sujeto1 - Energía total (tiempo):", energia)
+```
+donde obtuvimos las graficas en escala semilogaritmicas y los valores de cada una 
+
+<img width="1235" height="465" alt="image" src="https://github.com/user-attachments/assets/9b95118e-ceca-4ed4-a2fc-9850f382c374" />
+sujeto2
+<img width="1234" height="468" alt="image" src="https://github.com/user-attachments/assets/479f1d2f-836f-4228-803c-496c1ab271dc" />
+sujeto3
+<img width="1234" height="465" alt="image" src="https://github.com/user-attachments/assets/90294b19-bf54-402a-97ef-eeb2f8d26da0" />
+sujeto4
+<img width="1232" height="466" alt="image" src="https://github.com/user-attachments/assets/6498f43a-06cd-4118-9c99-06d41966afa0" />
+sujeto5
+<img width="1238" height="465" alt="image" src="https://github.com/user-attachments/assets/64e591b0-b146-44ce-8931-0d3368bf5586" />
+sujeto6
+<img width="1242" height="474" alt="image" src="https://github.com/user-attachments/assets/91ee1126-10cd-4934-b7c5-5247630cf1f4" />
+
 
 PARTE B – Medición de Jitter y Shimmer 
 
