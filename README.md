@@ -1446,12 +1446,18 @@ __Espectro de frecuencia:__ Representación de frecuencias que componen una onda
 
 **El nivel de RMS:** El Root Mean Square o "media cuadrática" es el nivel de volumen promedio y se mide en decibeles 
 
+**Frecuencia fundamental:** Tasa de vibración de las cuerdas vocales al general los sonidos, Se mide utilizando herramientas acústicas y se representa como F0
+
 
 ***Comparar los resultados obtenidos entre las voces masculinas y femeninas.***
 <img width="925" height="525" alt="image" src="https://github.com/user-attachments/assets/d2d51650-033d-4a57-aafd-a738b761f12b" />
 
 
- ¿Qué diferencias se observan en la frecuencia fundamental?
+*** ¿Qué diferencias se observan en la frecuencia fundamental?***
+Como se mencionó antes la frecuencia fundamental es la tasa de vibración de la voz y tiene un rango normal de entre 85 y 180 Hz, con un promedio de alrededor de 120 Hz en hombres adultos y en mujeres adultas entre 165 y 255 Hz, con un promedio de alrededor de 210 Hz. 
+Estas diferencias son debido a factores anatómicos especialmente del aparato fonador, donde en las mujeres se evidencia unas cuerdas vocales más cortas (12–20 mm) y más delgadas, lo que produce una vibración más rápida, mientras que en los hombres tienen una laringe más grande y sus hormonas como la testosterona aumenta la masa y longitud de las cuerdas, lo que disminuye la frecuencia fundamental.
+Hablando específicamente de nuestros resultados obtenidos tenemos concordancia con lo antes mencionado, las voces femeninas obtuvieron una F0 promedio de 321,34 mientras que las masculinas mostraron un promedio de 227.95 Hz, confirmando así que las voces femeninas son más agudas y presentan mayor vibración que las masculinas.
+
 
  ¿Qué otras diferencias notan en términos de brillo, media o intensidad?
 
