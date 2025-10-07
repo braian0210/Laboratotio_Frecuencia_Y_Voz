@@ -1448,6 +1448,8 @@ __Espectro de frecuencia:__ Representación de frecuencias que componen una onda
 
 
 ***Comparar los resultados obtenidos entre las voces masculinas y femeninas.***
+<img width="925" height="525" alt="image" src="https://github.com/user-attachments/assets/d2d51650-033d-4a57-aafd-a738b761f12b" />
+
 
  ¿Qué diferencias se observan en la frecuencia fundamental?
 
