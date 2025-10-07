@@ -23,15 +23,27 @@ personas distintas: 3 hombres y 3 mujeres. Para esto pueden usar los
 micrófonos de sus teléfonos inteligentes y configurar las características de
 muestreo para que sean las mismas en todos los dispositivos.
 
+
+
 2. Guardar cada archivo de voz en formato .wav con un nombre identificador
 claro (ejemplo: mujer1.wav, hombre2.wav).
 
+<img width="190" height="185" alt="image" src="https://github.com/user-attachments/assets/db76bae1-4575-478e-8a5f-948fc4df105c" />
+
+
+
 3. Importar las señales de voz en Python y graficarlas en el dominio del tiempo.
+
+   ```
    
-4. Calcular la Transformada de Fourier de cada señal y graficar su espectro de
+   ```
+   
+   
+   
+6. Calcular la Transformada de Fourier de cada señal y graficar su espectro de
 magnitudes frecuenciales.
 
-5. Identificar y reportar las siguientes características de cada señal:
+7. Identificar y reportar las siguientes características de cada señal:
     
 a. Frecuencia fundamental.
 
