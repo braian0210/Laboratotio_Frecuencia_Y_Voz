@@ -1201,7 +1201,8 @@ grabaciones (3 hombres, 3 mujeres).
 
 Datos obtenidos jitter:
 
-<img width="674" height="226" alt="image" src="https://github.com/user-attachments/assets/293ce2f4-b2ba-437f-9e7b-7999f2f5c043" />
+<img width="999" height="354" alt="image" src="https://github.com/user-attachments/assets/7b1aaf13-0266-4923-99fe-5691f464f66d" />
+
 
 Dados Obtenidos shimmer:
 
