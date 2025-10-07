@@ -1471,7 +1471,7 @@ Respecto al brillo, media o intensidad se evidencio en los resultados que las vo
 *** Redactar conclusiones sobre el comportamiento de la voz en hombres y
 mujeres a partir de los análisis realizados.***
 
-En conclusión, los datos obtenidos concuerdan con los datos teóricos y fisiológicos esperados, donde no es difícil evidenciar las diferencias entre voces femeninas y masculinas desde que las voces femeninas cuentan con más brillo y una frecuencia mayor y su variabilidad, demostrando así que las muestras fueron tomadas de la mejor manera y su posterior análisis fue bueno. Estos resultados son los esperados gracias a las anteriores investigaciones y el conocimiento fisiológico adquirido atreves de la carrera e investigaciones. 
+En conclusión, los datos obtenidos concuerdan con los datos teóricos y fisiológicos esperados, donde no es difícil evidenciar las diferencias entre voces femeninas y masculinas desde que las voces femeninas cuentan con más brillo y una frecuencia mayor y su variabilidad, en comparación con las masculinas, demostrando así que las muestras fueron tomadas de la mejor manera y su posterior análisis fue bueno. 
 
 
 *** Discuta la importancia clínica del jitter y shimmer en el análisis de la voz.***
