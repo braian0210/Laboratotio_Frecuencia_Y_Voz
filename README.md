@@ -49,7 +49,7 @@ Seleccione una de las grabaciones realizadas en la Parte A por cada género
    Aplique un filtro pasa-banda en el rango de la voz (80–400 Hz para
 hombres, 150–500 Hz para mujeres) para eliminar ruido no deseado.
 
-Se escogió al sujeto 1 masculini y femenino para aplicar el filtro pasa banda.
+Se escogió al sujeto 1 masculino y femenino para aplicar el filtro pasa banda.
 
 ```
 import numpy as np
@@ -260,7 +260,7 @@ Obteniéndose
 <img width="1389" height="790" alt="image" src="https://github.com/user-attachments/assets/638fdd5a-5913-4899-b4f1-e26e5c491c00" />
 
 
- Medición del Jitter (variación en la frecuencia fundamental):
+ Medición del Jitter (variación en la frecuencia fundamental):
 
    Detecte los periodos de vibración de la señal (usando cruces por cero
   o picos sucesivos).
@@ -274,6 +274,458 @@ Obteniéndose
   Calcule el jitter relativo (%): 
 
   <img width="316" height="71" alt="image" src="https://github.com/user-attachments/assets/bc6473b8-1af2-4c48-809d-e39bc3da8210" />
+
+  A continuación, se muestra el código que se utilizó para calcular todas aquellas mediciones de jitter para cada sujeto femenino y masculino.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.io import wavfile
+from scipy.signal import butter, filtfilt, find_peaks
+import pandas as pd
+from google.colab import drive
+import os
+drive.mount('/content/drive')
+
+rutas_audios = {
+    'Sujeto 1 Femenino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 1 fem.wav',
+    'Sujeto 2 Femenino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 2 fem.wav',
+    'Sujeto 3 Femenino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 3 fem.wav',
+    'Sujeto 1 Masculino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto masc 1 1.wav',
+    'Sujeto 2 Masculino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 2 masc.wav',
+    'Sujeto 3 Masculino': '/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/sujeto 3 masc.wav'
+}
+
+# Función para aplicar filtro pasa banda 
+def filtro_pasabanda(audio, fs, lowcut, highcut, order=4):
+    """Aplica filtro pasa banda Butterworth"""
+    nyquist = 0.5 * fs
+    low = lowcut / nyquist
+    high = highcut / nyquist
+    
+    # Verificar longitud del audio
+    min_length_required = 3 * (order + 1)
+    if len(audio) <= min_length_required:
+        new_order = max(1, (len(audio) // 3) - 1)
+        order = new_order
+
+    if order <= 0:
+        return np.zeros_like(audio)
+
+    b, a = butter(order, [low, high], btype='band')
+    audio_filtrado = filtfilt(b, a, audio)
+    return audio_filtrado
+
+# Función para detectar periodos usando cruces por cero
+def detectar_periodos_cruces_cero(audio, fs, umbral=0.02):
+    """Detecta periodos usando cruces por cero con umbral"""
+    # Aplicar umbral para eliminar ruido
+    audio_umbral = audio.copy()
+    audio_umbral[np.abs(audio_umbral) < umbral * np.max(np.abs(audio_umbral))] = 0
+    
+    # Encontrar cruces por cero positivos
+    cruces_cero = []
+    for i in range(1, len(audio_umbral)):
+        if audio_umbral[i-1] <= 0 and audio_umbral[i] > 0:
+            cruces_cero.append(i)
+    
+    # Calcular periodos (en muestras)
+    periodos_muestras = []
+    for i in range(1, len(cruces_cero)):
+        periodo = cruces_cero[i] - cruces_cero[i-1]
+        # Filtrar periodos muy cortos o muy largos (eliminar outliers)
+        if 0.001 * fs < periodo < 0.02 * fs:  # Entre 1ms y 20ms (50-1000 Hz)
+            periodos_muestras.append(periodo)
+    
+    # Convertir a segundos
+    periodos_segundos = np.array(periodos_muestras) / fs
+    return periodos_segundos, cruces_cero
+
+# Función para detectar periodos usando picos
+def detectar_periodos_picos(audio, fs, distancia_minima=None):
+    """Detecta periodos usando picos sucesivos"""
+    if distancia_minima is None:
+        distancia_minima = int(0.005 * fs)  # 5ms mínima distancia entre picos
+    
+    # Encontrar picos positivos
+    picos, _ = find_peaks(audio, distance=distancia_minima, height=0.1*np.max(audio))
+    
+    # Calcular periodos (en muestras)
+    periodos_muestras = []
+    for i in range(1, len(picos)):
+        periodo = picos[i] - picos[i-1]
+        # Filtrar periodos razonables
+        if 0.001 * fs < periodo < 0.02 * fs:  # Entre 1ms y 20ms
+            periodos_muestras.append(periodo)
+    
+    # Convertir a segundos
+    periodos_segundos = np.array(periodos_muestras) / fs
+    return periodos_segundos, picos
+
+# Función para calcular jitter
+def calcular_jitter(periodos):
+    """Calcula jitter absoluto y relativo según las fórmulas especificadas"""
+    if len(periodos) < 2:
+        return 0, 0, 0, 0
+    
+    N = len(periodos)
+    
+    # Calcular jitter absoluto
+    suma_diferencias = 0
+    for i in range(N-1):
+        suma_diferencias += abs(periodos[i] - periodos[i+1])
+    
+    jitter_abs = suma_diferencias / (N-1)
+    
+    # Calcular periodo promedio
+    periodo_promedio = np.mean(periodos)
+    
+    # Calcular jitter relativo (%)
+    jitter_rel = (jitter_abs / periodo_promedio) * 100
+    
+    # Jitter local (variación entre periodos consecutivos)
+    jitter_local = np.mean(np.abs(np.diff(periodos)))
+    
+    return jitter_abs, jitter_rel, periodo_promedio, jitter_local
+
+# Función principal para procesar un audio
+def procesar_audio(ruta_audio, nombre_audio, genero='femenino'):
+    """Procesa un archivo de audio y calcula sus métricas de jitter"""
+    print(f"\n{'='*60}")
+    print(f"PROCESANDO: {nombre_audio}")
+    print(f"{'='*60}")
+    
+    try:
+        # Cargar audio
+        fs, audio = wavfile.read(ruta_audio)
+        print(f"Frecuencia de muestreo: {fs} Hz")
+        print(f"Duración: {len(audio)/fs:.2f} segundos")
+        
+        # Convertir a mono si es stereo
+        if len(audio.shape) > 1:
+            audio = audio[:, 0]
+            print("Audio convertido a mono")
+        
+        # Convertir a float y normalizar
+        audio = audio.astype(np.float32)
+        audio = audio / np.max(np.abs(audio))
+        
+        # Aplicar filtro pasa banda según el género
+        if genero.lower() == 'femenino':
+            audio_filtrado = filtro_pasabanda(audio, fs, 150, 500)
+            rango_frecuencia = "150-500 Hz"
+        else:
+            audio_filtrado = filtro_pasabanda(audio, fs, 80, 400)
+            rango_frecuencia = "80-400 Hz"
+        
+        print(f"Filtro aplicado: {rango_frecuencia}")
+        
+        # Detectar periodos usando ambos métodos
+        periodos_cruces, cruces = detectar_periodos_cruces_cero(audio_filtrado, fs)
+        periodos_picos, picos = detectar_periodos_picos(audio_filtrado, fs)
+        
+        print(f"Periodos detectados - Cruces por cero: {len(periodos_cruces)}")
+        print(f"Periodos detectados - Picos: {len(periodos_picos)}")
+        
+        # Usar el método que detecte más periodos (generalmente más confiable)
+        if len(periodos_cruces) >= len(periodos_picos):
+            periodos = periodos_cruces
+            metodo = "Cruces por cero"
+            puntos_deteccion = cruces
+        else:
+            periodos = periodos_picos
+            metodo = "Picos"
+            puntos_deteccion = picos
+        
+        print(f"Método seleccionado: {metodo}")
+        
+        if len(periodos) < 2:
+            print("ADVERTENCIA: No se detectaron suficientes periodos para calcular jitter")
+            return None, None, None, None, None
+        
+        # Calcular métricas de jitter
+        jitter_abs, jitter_rel, periodo_promedio, jitter_local = calcular_jitter(periodos)
+        f0_promedio = 1 / periodo_promedio if periodo_promedio > 0 else 0
+        
+        print(f"\n--- RESULTADOS JITTER ---")
+        print(f"Jitter absoluto: {jitter_abs*1000:.6f} ms")
+        print(f"Jitter relativo: {jitter_rel:.6f} %")
+        print(f"Jitter local: {jitter_local*1000:.6f} ms")
+        print(f"Periodo promedio: {periodo_promedio*1000:.6f} ms")
+        print(f"Frecuencia fundamental (F0): {f0_promedio:.2f} Hz")
+        print(f"Número de periodos analizados: {len(periodos)}")
+        
+        # Visualización
+        visualizar_resultados(audio, audio_filtrado, puntos_deteccion, periodos, 
+                            nombre_audio, metodo, fs)
+        
+        return jitter_abs, jitter_rel, periodo_promedio, f0_promedio, len(periodos)
+        
+    except Exception as e:
+        print(f"ERROR procesando {nombre_audio}: {e}")
+        return None, None, None, None, None
+
+# Función para visualizar resultados
+def visualizar_resultados(audio_original, audio_filtrado, puntos_deteccion, periodos, 
+                         nombre_audio, metodo, fs):
+    """Genera gráficos para visualizar los resultados"""
+    # Mostrar solo una parte del audio para mejor visualización
+    muestras_visualizar = min(5000, len(audio_original))
+    tiempo = np.arange(muestras_visualizar) / fs
+    
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    fig.suptitle(f'Análisis de Jitter - {nombre_audio}\n(Método: {metodo})', fontsize=16)
+    
+    # Gráfico 1: Señal original vs filtrada
+    axes[0, 0].plot(tiempo, audio_original[:muestras_visualizar], 
+                   color='gray', alpha=0.7, label='Original')
+    axes[0, 0].plot(tiempo, audio_filtrado[:muestras_visualizar], 
+                   color='blue', linewidth=1, label='Filtrada')
+    axes[0, 0].set_title('Señal Original vs Filtrada')
+    axes[0, 0].set_xlabel('Tiempo (s)')
+    axes[0, 0].set_ylabel('Amplitud')
+    axes[0, 0].legend()
+    axes[0, 0].grid(True, alpha=0.3)
+    
+    # Gráfico 2: Puntos de detección
+    axes[0, 1].plot(tiempo, audio_filtrado[:muestras_visualizar], 
+                   color='blue', linewidth=1, label='Señal filtrada')
+    
+    # Marcar puntos de detección en el rango visualizado
+    puntos_en_rango = [p for p in puntos_deteccion if p < muestras_visualizar]
+    tiempos_puntos = np.array(puntos_en_rango) / fs
+    amplitudes_puntos = audio_filtrado[puntos_en_rango]
+    
+    axes[0, 1].scatter(tiempos_puntos, amplitudes_puntos, 
+                      color='red', s=30, zorder=5, label=f'Puntos {metodo}')
+    axes[0, 1].set_title(f'Detección de Periodos ({metodo})')
+    axes[0, 1].set_xlabel('Tiempo (s)')
+    axes[0, 1].set_ylabel('Amplitud')
+    axes[0, 1].legend()
+    axes[0, 1].grid(True, alpha=0.3)
+    
+    # Gráfico 3: Distribución de periodos
+    axes[1, 0].hist(periodos * 1000, bins=15, alpha=0.7, color='green', edgecolor='black')
+    axes[1, 0].axvline(np.mean(periodos) * 1000, color='red', linestyle='--', 
+                      label=f'Promedio: {np.mean(periodos)*1000:.3f} ms')
+    axes[1, 0].set_title('Distribución de Periodos')
+    axes[1, 0].set_xlabel('Periodo (ms)')
+    axes[1, 0].set_ylabel('Frecuencia')
+    axes[1, 0].legend()
+    axes[1, 0].grid(True, alpha=0.3)
+    
+    # Gráfico 4: Evolución temporal de periodos
+    axes[1, 1].plot(periodos * 1000, 'o-', markersize=4, linewidth=1)
+    axes[1, 1].axhline(np.mean(periodos) * 1000, color='red', linestyle='--', 
+                      label='Promedio')
+    axes[1, 1].set_title('Evolución Temporal de Periodos')
+    axes[1, 1].set_xlabel('Número de Periodo')
+    axes[1, 1].set_ylabel('Periodo (ms)')
+    axes[1, 1].legend()
+    axes[1, 1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.show()
+
+# Procesar todos los audios
+print("INICIANDO ANÁLISIS DE JITTER PARA 6 AUDIOS")
+print("="*70)
+
+resultados = []
+
+for nombre, ruta in rutas_audios.items():
+    # Determinar género basado en el nombre
+    if 'fem' in nombre.lower():
+        genero = 'femenino'
+    else:
+        genero = 'masculino'
+    
+    # Verificar si el archivo existe
+    if not os.path.exists(ruta):
+        print(f"\n❌ ARCHIVO NO ENCONTRADO: {ruta}")
+        continue
+    
+    # Procesar audio
+    jitter_abs, jitter_rel, periodo_prom, f0, n_periodos = procesar_audio(
+        ruta, nombre, genero)
+    
+    if jitter_abs is not None:
+        resultados.append({
+            'Audio': nombre,
+            'Género': genero,
+            'Jitter Absoluto (ms)': jitter_abs * 1000,
+            'Jitter Relativo (%)': jitter_rel,
+            'Periodo Promedio (ms)': periodo_prom * 1000,
+            'F0 Promedio (Hz)': f0,
+            'N° Periodos': n_periodos
+        })
+
+# Mostrar tabla resumen
+print("\n" + "="*80)
+print("RESUMEN GENERAL DE RESULTADOS")
+print("="*80)
+
+if resultados:
+    df_resultados = pd.DataFrame(resultados)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', 1000)
+    pd.set_option('display.precision', 6)
+    
+    print("\nTabla de Resultados:")
+    print(df_resultados.to_string(index=False))
+    
+    # Estadísticas por género
+    print("\n" + "-"*50)
+    print("ESTADÍSTICAS POR GÉNERO")
+    print("-"*50)
+    
+    stats_femenino = df_resultados[df_resultados['Género'] == 'femenino']
+    stats_masculino = df_resultados[df_resultados['Género'] == 'masculino']
+    
+    if not stats_femenino.empty:
+        print("\n🔹 VOCES FEMENINAS:")
+        print(f"Jitter Relativo Promedio: {stats_femenino['Jitter Relativo (%)'].mean():.4f} %")
+        print(f"F0 Promedio: {stats_femenino['F0 Promedio (Hz)'].mean():.2f} Hz")
+    
+    if not stats_masculino.empty:
+        print("\n🔹 VOCES MASCULINAS:")
+        print(f"Jitter Relativo Promedio: {stats_masculino['Jitter Relativo (%)'].mean():.4f} %")
+        print(f"F0 Promedio: {stats_masculino['F0 Promedio (Hz)'].mean():.2f} Hz")
+    
+    # Guardar resultados en CSV
+    df_resultados.to_csv('/content/drive/Shareddrives/Labs procesamiento de señales/Lab 3/resultados_jitter.csv', index=False)
+    print(f"\n✅ Resultados guardados en: resultados_jitter.csv")
+    
+else:
+    print("❌ No se pudieron procesar ninguno de los audios")
+
+print("\n🎯 ANÁLISIS COMPLETADO")
+
+```
+
+Obtendiendose los siguientes resultados para cada sujeto.
+
+PROCESANDO: Sujeto 1 Femenino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+
+Duración: 4.08 segundos
+
+Filtro aplicado: 150-500 Hz
+
+Periodos detectados - Cruces por cero: 1299
+
+Periodos detectados - Picos: 361
+
+--- RESULTADOS JITTER ---
+
+Jitter absoluto: 0.803030 ms
+
+Jitter relativo: 26.409212 %
+
+Periodo promedio: 3.040720 ms
+
+Frecuencia fundamental (F0): 328.87 Hz
+
+Número de periodos analizados: 1299
+
+<img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/df711756-c8f4-4bab-b6d7-16871956955e" />
+
+
+PROCESANDO: Sujeto 2 Femenino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+Duración: 3.56 segundos
+Filtro aplicado: 150-500 Hz
+Periodos detectados - Cruces por cero: 1043
+Periodos detectados - Picos: 298
+
+--- RESULTADOS JITTER ---
+Jitter absoluto: 1.031830 ms
+Jitter relativo: 32.868550 %
+Periodo promedio: 3.139262 ms
+Frecuencia fundamental (F0): 318.55 Hz
+Número de periodos analizados: 1043
+
+<img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/b7815432-91c1-4a39-9b9b-b8b16a33d38c" />
+
+PROCESANDO: Sujeto 3 Femenino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+Duración: 4.24 segundos
+Filtro aplicado: 150-500 Hz
+Periodos detectados - Cruces por cero: 1302
+Periodos detectados - Picos: 462
+
+--- RESULTADOS JITTER ---
+Jitter absoluto: 0.666507 ms
+Jitter relativo: 21.102489 %
+Periodo promedio: 3.158426 ms
+Frecuencia fundamental (F0): 316.61 Hz
+Número de periodos analizados: 1302
+
+<img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/7b356db2-5ce0-4ea3-bec0-2d1b14639c82" />
+
+
+PROCESANDO: Sujeto 1 Masculino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+Duración: 5.04 segundos
+Filtro aplicado: 80-400 Hz
+Periodos detectados - Cruces por cero: 1044
+Periodos detectados - Picos: 488
+
+--- RESULTADOS JITTER ---
+Jitter absoluto: 1.687880 ms
+Jitter relativo: 35.818103 %
+Periodo promedio: 4.712364 ms
+Frecuencia fundamental (F0): 212.21 Hz
+Número de periodos analizados: 1044
+
+<img width="1490" height="985" alt="image" src="https://github.com/user-attachments/assets/9f1e6c09-db9a-4b30-a34e-0b5c03282385" />
+
+
+PROCESANDO: Sujeto 2 Masculino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+Duración: 3.80 segundos
+Filtro aplicado: 80-400 Hz
+Periodos detectados - Cruces por cero: 851
+Periodos detectados - Picos: 367
+
+--- RESULTADOS JITTER ---
+Jitter absoluto: 1.754755 ms
+Jitter relativo: 40.845554 %
+Periodo promedio: 4.296073 ms
+Frecuencia fundamental (F0): 232.77 Hz
+Número de periodos analizados: 851
+
+<img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/d7c5587a-2932-4444-b23a-5d80a7bb8c0a" />
+
+
+PROCESANDO: Sujeto 3 Masculino
+============================================================
+Frecuencia de muestreo: 48000 Hz
+Duración: 3.56 segundos
+Filtro aplicado: 80-400 Hz
+Periodos detectados - Cruces por cero: 821
+Periodos detectados - Picos: 340
+
+--- RESULTADOS JITTER ---
+Jitter absoluto: 1.677998 ms
+Jitter relativo: 40.084710 %
+Periodo promedio: 4.186130 ms
+Frecuencia fundamental (F0): 238.88 Hz
+Número de periodos analizados: 821
+
+<img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/1ba68e16-fd92-473e-9b2f-87c72cb8bb70" />
+
+
+
+
+
+
+
 
  Medición del Shimmer (variación en la amplitud):
 
@@ -289,6 +741,15 @@ Obteniéndose
 
  Presente los valores obtenidos de jitter y shimmer para cada una de las 6
 grabaciones (3 hombres, 3 mujeres). 
+
+Datos obtenidos jitter:
+
+<img width="674" height="226" alt="image" src="https://github.com/user-attachments/assets/293ce2f4-b2ba-437f-9e7b-7999f2f5c043" />
+
+Dados Obtenidos shimmer:
+
+
+
 
 PARTE C – Comparación y conclusiones 
 
