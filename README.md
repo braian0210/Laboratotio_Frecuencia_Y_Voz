@@ -1476,6 +1476,8 @@ En conclusión, los datos obtenidos concuerdan con los datos teóricos y fisiol�
 
 *** Discuta la importancia clínica del jitter y shimmer en el análisis de la voz.***
 
+Con respecto a la importancia clínica es fundamental ya que su uso es necesario para la evaluación objetiva de los diversos trastornos de voz o también conocidos como disfonías, esto gracias a que los dos miden las variaciones tanto de frecuencia como de amplitud en los ciclos glóticos, por lo tanto su variación o alteración nos puede estar mostrando una inestabilidad de la fonación que puede verse clínicamente como una patología del aparato fonador ya sean nódulos, pólipos o variedad más. El tener en cuenta estos parámetros es fundamental para la detección temprana de disfunciones vocales, monitorizar tratamientos o evaluar la recuperación después de terapias o cirugías.
+
 
 
 
