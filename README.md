@@ -1429,6 +1429,23 @@ Dados Obtenidos shimmer:
 
 
 PARTE C – Comparación y conclusiones 
+Para realizar la parte C se necesitan conocimientos previos para entender los resultados, por eso tendremos un mini glosario con lo mas importante antes de empezar con las comparaciones y conclusiones.
+
+
+Shimmer: su traducción directa es brillo, en el contexto en el que hablamos (voces) este brillo se refiere a una variación de manera porcentual en la amplitud de la onda sonora de la voz, estas variaciones se pueden percibir como ronquera o asperezas de la voz. Y es calculada como la diferencia absoluta promedio entre las amplitudes de periodos consecutivos dividida entre la amplitud media.
+
+
+Jitter: Este se refiere a las pequeñas variaciones de las frecuencias fundamentales entre ciclos glóticos, e indica la estabilidad de la voz.
+
+
+Ciclos glóticos: Ciclo de apertura y cierre de la glotis (cuerdas vocales) que generan sonidos.
+
+
+Espectro de frecuencia: Representación de frecuencias que componen una onda en este caso una onda sonora, en el caso de la voz humana se sitúa principalmente entre 80 Hz y 1100 Hz aunque también puede haber variaciones.
+
+
+El nivel de RMS: El Root Mean Square o "media cuadrática" es el nivel de volumen promedio y se mide en decibeles 
+
 
 Comparar los resultados obtenidos entre las voces masculinas y femeninas.ç
 
