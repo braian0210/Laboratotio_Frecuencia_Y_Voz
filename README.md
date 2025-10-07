@@ -737,7 +737,7 @@ print("\n ANÁLISIS COMPLETADO")
 
 Obtendiendose los siguientes resultados para cada sujeto.
 
-PROCESANDO: Sujeto 1 Femenino
+Sujeto 1 Femenino
 ============================================================
 Frecuencia de muestreo: 48000 Hz
 
@@ -764,91 +764,145 @@ Número de periodos analizados: 1299
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/df711756-c8f4-4bab-b6d7-16871956955e" />
 
 
-PROCESANDO: Sujeto 2 Femenino
+Sujeto 2 Femenino
 ============================================================
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.56 segundos
+
 Filtro aplicado: 150-500 Hz
+
 Periodos detectados - Cruces por cero: 1043
+
 Periodos detectados - Picos: 298
 
 --- RESULTADOS JITTER ---
+
 Jitter absoluto: 1.031830 ms
+
 Jitter relativo: 32.868550 %
+
 Periodo promedio: 3.139262 ms
+
 Frecuencia fundamental (F0): 318.55 Hz
+
 Número de periodos analizados: 1043
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/b7815432-91c1-4a39-9b9b-b8b16a33d38c" />
 
-PROCESANDO: Sujeto 3 Femenino
+
+Sujeto 3 Femenino
 ============================================================
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 4.24 segundos
+
 Filtro aplicado: 150-500 Hz
+
 Periodos detectados - Cruces por cero: 1302
+
 Periodos detectados - Picos: 462
 
 --- RESULTADOS JITTER ---
+
 Jitter absoluto: 0.666507 ms
+
 Jitter relativo: 21.102489 %
+
 Periodo promedio: 3.158426 ms
+
 Frecuencia fundamental (F0): 316.61 Hz
+
 Número de periodos analizados: 1302
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/7b356db2-5ce0-4ea3-bec0-2d1b14639c82" />
 
 
-PROCESANDO: Sujeto 1 Masculino
+Sujeto 1 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 5.04 segundos
+
 Filtro aplicado: 80-400 Hz
+
 Periodos detectados - Cruces por cero: 1044
+
 Periodos detectados - Picos: 488
 
 --- RESULTADOS JITTER ---
+
 Jitter absoluto: 1.687880 ms
+
 Jitter relativo: 35.818103 %
+
 Periodo promedio: 4.712364 ms
+
 Frecuencia fundamental (F0): 212.21 Hz
+
 Número de periodos analizados: 1044
+
 
 <img width="1490" height="985" alt="image" src="https://github.com/user-attachments/assets/9f1e6c09-db9a-4b30-a34e-0b5c03282385" />
 
 
-PROCESANDO: Sujeto 2 Masculino
+Sujeto 2 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.80 segundos
+
 Filtro aplicado: 80-400 Hz
+
 Periodos detectados - Cruces por cero: 851
+
 Periodos detectados - Picos: 367
 
 --- RESULTADOS JITTER ---
+
 Jitter absoluto: 1.754755 ms
+
 Jitter relativo: 40.845554 %
+
 Periodo promedio: 4.296073 ms
+
 Frecuencia fundamental (F0): 232.77 Hz
+
 Número de periodos analizados: 851
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/d7c5587a-2932-4444-b23a-5d80a7bb8c0a" />
 
 
-PROCESANDO: Sujeto 3 Masculino
+Sujeto 3 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.56 segundos
+
 Filtro aplicado: 80-400 Hz
+
 Periodos detectados - Cruces por cero: 821
+
 Periodos detectados - Picos: 340
 
 --- RESULTADOS JITTER ---
+
 Jitter absoluto: 1.677998 ms
+
 Jitter relativo: 40.084710 %
+
 Periodo promedio: 4.186130 ms
+
 Frecuencia fundamental (F0): 238.88 Hz
+
 Número de periodos analizados: 821
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/1ba68e16-fd92-473e-9b2f-87c72cb8bb70" />
 
@@ -859,11 +913,15 @@ Número de periodos analizados: 821
   
    Obtenga el shimmer absoluto: 
 
+
   <img width="313" height="90" alt="image" src="https://github.com/user-attachments/assets/994db285-de06-408b-827f-66651a5cb0a1" />
 
+
    Calcule el shimmer relativo (%): 
+
   
   <img width="339" height="78" alt="image" src="https://github.com/user-attachments/assets/bc624b39-5211-4d98-9bf9-40f5343dba37" />
+
 
 A continuación, se muestra el codigo que se realizó para calcular cada una de las mediciones de shimer para cada sujeto femenino y masculino.
 
@@ -1188,139 +1246,167 @@ print("\n ANÁLISIS DE SHIMMER COMPLETADO")
 
 Obteniéndose los siguientes resultados:
 
-PROCESANDO: Sujeto 1 Femenino
+Sujeto 1 Femenino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 4.08 segundos
-Audio convertido a mono
+
 Filtro aplicado: 150-500 Hz
+
 Amplitudes detectadas: 364
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.045846
+
 Shimmer relativo: 24.449685 %
-Shimmer local: 0.045846
+
 Amplitud promedio: 0.187513
+
 Número de amplitudes analizadas: 364
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.045846
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 24.449685%
 Donde A_promedio = 0.187513
 
 <img width="1490" height="985" alt="image" src="https://github.com/user-attachments/assets/37461180-11a8-4e40-9e45-844cfdb1ac00" />
 
-PROCESANDO: Sujeto 2 Femenino
+Sujeto 2 Femenino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.56 segundos
-Audio convertido a mono
+
+
 Filtro aplicado: 150-500 Hz
+
 Amplitudes detectadas: 303
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.038508
+
 Shimmer relativo: 27.511857 %
-Shimmer local: 0.038508
+
 Amplitud promedio: 0.139968
+
 Número de amplitudes analizadas: 303
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.038508
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 27.511857%
 Donde A_promedio = 0.139968
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/d55cf136-6592-4e74-9f34-a3f5e464f488" />
 
 
-PROCESANDO: Sujeto 3 Femenino
+Sujeto 3 Femenino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 4.24 segundos
-Audio convertido a mono
+
 Filtro aplicado: 150-500 Hz
+
 Amplitudes detectadas: 450
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.025719
+
 Shimmer relativo: 30.384430 %
+
 Shimmer local: 0.025719
+
 Amplitud promedio: 0.084646
+
 Número de amplitudes analizadas: 450
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.025719
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 30.384430%
 Donde A_promedio = 0.084646
+
 
 <img width="1487" height="985" alt="image" src="https://github.com/user-attachments/assets/be013df0-d6ec-4e91-9455-ac4666cb7770" />
 
 
-PROCESANDO: Sujeto 1 Masculino
+Sujeto 1 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 5.04 segundos
-Audio convertido a mono
+
 Filtro aplicado: 80-400 Hz
+
 Amplitudes detectadas: 464
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.021168
+
 Shimmer relativo: 18.913645 %
-Shimmer local: 0.021168
+
 Amplitud promedio: 0.111920
+
 Número de amplitudes analizadas: 464
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.021168
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 18.913645%
 Donde A_promedio = 0.111920
 
 
 <img width="1487" height="985" alt="image" src="https://github.com/user-attachments/assets/8d2c2892-d0bc-4996-8340-470dee468099" />
 
 
-PROCESANDO: Sujeto 2 Masculino
+Sujeto 2 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.80 segundos
-Audio convertido a mono
+
 Filtro aplicado: 80-400 Hz
+
 Amplitudes detectadas: 356
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.040427
+
 Shimmer relativo: 22.495124 %
+
 Shimmer local: 0.040427
+
 Amplitud promedio: 0.179716
+
 Número de amplitudes analizadas: 356
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.040427
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 22.495124%
 Donde A_promedio = 0.179716
+
 
 <img width="1489" height="985" alt="image" src="https://github.com/user-attachments/assets/9dd4892c-3064-4a88-8c33-fe47a27c9d54" />
 
 
-PROCESANDO: Sujeto 3 Masculino
+Sujeto 3 Masculino
 ============================================================
+
 Frecuencia de muestreo: 48000 Hz
+
 Duración: 3.56 segundos
+
 Audio convertido a mono
+
 Filtro aplicado: 80-400 Hz
+
 Amplitudes detectadas: 340
 
 --- RESULTADOS SHIMMER ---
+
 Shimmer absoluto: 0.041566
+
 Shimmer relativo: 33.591883 %
-Shimmer local: 0.041566
+
 Amplitud promedio: 0.123739
+
 Número de amplitudes analizadas: 340
 
---- FÓRMULAS APLICADAS ---
-Shimmer_abs = (1/(N-1)) * Σ|A_i - A_i+1| = 0.041566
-Shimmer_rel = (Shimmer_abs / A_promedio) * 100 = 33.591883%
 Donde A_promedio = 0.123739
 
 
